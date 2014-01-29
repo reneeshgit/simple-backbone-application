@@ -1,0 +1,52 @@
+<h2>Add Customer</h2>
+
+
+<form name="frm_add_Customer" id="frm_add_Customer" method="post">
+
+	<table>
+		<tr>
+			<td>First Name</td>
+			<td><input type="text" name="first_name"></td>
+		</tr>
+		<tr>
+			<td>Last Name</td>
+			<td><input type="text" name="last_name"></td>
+		</tr>
+		<tr>
+			<td>Company</td>
+			<td><input type="text" name="company"></td>
+		</tr>
+		<tr>
+			<td>Phone</td>
+			<td><input type="text" name="phone"></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td><input type="text" name="email"></td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td><input type="password" name="password"></td>
+		</tr>
+		<tr>
+			<td>Newsletter Subscription</td>
+			<td><input type="checkbox" value="1" name="newsletter_status" checked='true'></td>
+		</tr>
+		<tr>
+			<td>Account Status</td>
+			<td><select name="account_status" class="small-input">
+					<option value="1" selected="selected">Active</option>
+					<option value="0" >Inactive</option>
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">  <input type="submit" class="button" value="Save" name="submit" />
+			</td>
+		</tr>
+		</table>
+
+</form>
+
+<div id="customers"></div>

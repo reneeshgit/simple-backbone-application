@@ -1,0 +1,51 @@
+<h2>Edit Customer</h2>
+
+
+<form name="frm_edit_Customer" id="frm_edit_Customer" method="post">
+<input type="hidden" name="_method" value="PUT" />
+<input type="hidden" id='id' name="id" value="{{customer.id}}" />
+	<table>
+		<tr>
+			<td>First Name</td>
+			<td><input type="text" id="first_name" value="{{customer.first_name}}" name="first_name"></td>
+		</tr>
+		<tr>
+			<td>Last Name</td>
+			<td><input type="text" id="last_name" value="{{customer.last_name}}" name="last_name"></td>
+		</tr>
+		<tr>
+			<td>Company</td>
+			<td><input type="text" id="company" value="{{customer.company}}" name="company"></td>
+		</tr>
+		<tr>
+			<td>Phone</td>
+			<td><input type="text" id="phone" value="{{customer.phone}}" name="phone"></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td><input type="text" id="email" value="{{customer.email}}" name="email"></td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td><input type="password" id="password" name="password"></td>
+		</tr>
+		<tr>
+			<td>Newsletter Subscription</td>
+			<td><input type="checkbox" value="1" {{customer.newsletter_checked}} id="newsletter_status" name="newsletter_status"></td>
+		</tr>
+		<tr>
+			<td>Account Status</td>
+			<td><select id="account_status" name="account_status">
+					<option value="1" {{customer.account_status_active}}>Active</option>
+					<option value="0" {{customer.account_status_inactive}}>Inactive</option>
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">  <input type="submit" class="button" value="Save" name="submit" />
+			</td>
+		</tr>
+		</table>
+
+</form>

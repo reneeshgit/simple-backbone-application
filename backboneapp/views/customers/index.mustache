@@ -1,0 +1,36 @@
+ 
+	<h2>Manage Site Customers</h2>
+
+	<a id='add_customer'>Add Customers</a>
+				
+	<div class="content-box">
+
+	<div class="content-box-content"> 
+			
+
+			<table id="datatable" border=1>
+				<thead>
+					<tr id="titles">
+						<th>First Name </th>
+						<th>Last Name</th>
+						<th>Company</th>
+						<th>Phone</th>
+						<th>Email</th>
+						<th>Newsletter</th>
+						<th>Status</th>
+						<th>Reg Date</th>
+						<th class="sorttable_nosort">Action</th>
+					</tr>
+
+				</thead>
+				
+				<tbody id="customers">
+					{{#customers}}
+ 						{{> customers._customer}}
+					{{/customers}}
+				</tbody>
+			</table>
+			<div id="paging"></div>
+	</div>
+	
+   </div>

@@ -1,0 +1,19 @@
+
+-- 
+-- Table structure for table `dah_customers`
+-- 
+
+CREATE TABLE `dah_customers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `newsletter_status` tinyint(1) NOT NULL,
+  `account_status` tinyint(1) NOT NULL,
+  `reg_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+        
