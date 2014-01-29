@@ -21,17 +21,8 @@ class CustomerController extends BaseController {
 
 	public function index()
 	{
-		$page = Input::get('page');
-		$perpage = Input::get('perPage');
 
-		if($page!='')
-			$customers = Customers::skip($perpage*($page-1))->take($perpage)->orderBy('first_name','asc')->get();
-		else
-			$customers = Customers::orderBy('first_name','asc')->get();
-
-// 		$count = Customers::all()->count();
-
-// 		return Response::json(array('customers'=>$customers->toArray(),'count'=>$count));
+		$customers = Customers::orderBy('first_name','asc')->get();
 
 		return Response::json($customers);
 
