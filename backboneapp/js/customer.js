@@ -56,6 +56,7 @@ var CustomerMain = BaseView.extend({
 			self.$el.html('');
 			self.$el.html(self.template({}) );
 			perpage = self.page * self.perPage;
+			//this code is for listing the customers with the current number of pages loaded.
 			self.pagination(1,perpage);
 			notifications.add({
 				type: 'success',
@@ -80,6 +81,7 @@ var CustomerMain = BaseView.extend({
 			self.customerEditView = new CustomerEditView({
 				el : $('#main_content'),
 				collection: self.collection,
+				mainObj:self,
 			});
 		}
 		
@@ -145,6 +147,7 @@ var CustomerMain = BaseView.extend({
 			self.CustomerAddView = new CustomerAdd({
 				collection:this.collection,
 				el: self.el,
+				mainObj:self,
 			});
 		}
 		self.CustomerAddView.render();
@@ -159,6 +162,10 @@ var CustomerAdd = BaseView.extend({
 	
 
 	view: 'customers.create',
+	mainObj:null,
+	initialize: function(options){
+		this.mainObj = options.mainObj;
+	},
 
 	events: {
     
@@ -168,7 +175,10 @@ var CustomerAdd = BaseView.extend({
 			e.stopPropagation();
 		
 			return this.saveCustomer( $(e.target).serialize() );
-		}
+		},
+		'click #list_customer':function(e){
+			this.mainObj.render();
+		},
 		
 	},
 	//fuction for saving customer details to database
@@ -186,11 +196,12 @@ var CustomerAdd = BaseView.extend({
 			self.collection.add(Customer);
 
 			self.$('#frm_add_Customer')[0].reset();
+
+			self.mainObj.render();
 			notifications.add({
 				type: 'success',
 				message: 'Customer Added!'
 			});
-			window.history.back();
 			
 		}).fail(function(jqXHR, textStatus, errorThrown){
 
@@ -219,64 +230,57 @@ var CustomerAdd = BaseView.extend({
 var CustomerEditView = BaseView.extend({
 
 	view: 'customers.edit',
+	mainObj:null,
+
+	initialize:function(options){
+		this.mainObj = options.mainObj;
+	},
 
 	events: {
+
+	'click #list_customer':function(e){
+			this.mainObj.render();
+		},
     
 	// this function is invoked when click on save button from edit customer page
 	'submit #frm_edit_Customer': function(e)
     {
 		e.preventDefault();
 		e.stopPropagation();
+		self = this;
  
       	var id = $('#id').val();
-//this commented code also works ( but the next code is something more easier)
-// 		if($('#newsletter_status').prop('checked')==true)
-// 			var nStatus = 1;
-// 		else
-// 			var nStatus = 0;
-// 		var model = this.collection.get(id);
-// 		model.set({
-// 			first_name:$('#first_name').val(),
-// 			last_name: $('#last_name').val(),
-// 			company: $('#company').val(),
-// 			phone: $('#phone').val(),
-// 			email: $('#email').val(),
-// 			password: $('#password').val(),
-// 			newsletter_status: nStatus,
-// 			account_status: $('#account_status').val(),
-// 		});
-// 
-// 		model.save();
 
-		var
-		self = this,	
-		action = apiUrl +'api/v2/customers/'+id
-		;
-	
-		formData = $(e.target).serialize();
-		//submit a post to our api
-		$.post(action, formData, function(Customer, status, xhr)
-		{
+		formData = $(e.target).serializeArray();
 
-			model = self.collection.get(id);
-			self.collection.remove(model);
-			self.collection.add(Customer);
+		var newData = {}
 
-			notifications.add({
-				type: 'success',
-				message: 'Customer updated!'
-			});
-			window.history.back();
+		for(var i in formData)
+			newData[formData[i].name] = formData[i].value;
+
+		var model = this.collection.get(id);
+
+		model.save(newData,{
+			success: function(model, response, options) {
+
+				self.mainObj.render();
+
+				notifications.add({
+					type: 'success',
+					message: 'Customer updated!'
+				});
+			}, 
+			error: function(model, xhr, options) {
+
+				var err = $.parseJSON(xhr.responseText);
 			
-		}).fail(function(jqXHR, textStatus, errorThrown){
+				notifications.add({
+					type: 'error',
+					message: err.err_msg
+				});
+			}
+		});		
 
-			var err = $.parseJSON(jqXHR.responseText);
-			
-			notifications.add({
-				type: 'error',
-				message: err.err_msg
-			});
-		});
     }
 	
   },
